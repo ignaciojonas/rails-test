@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:13.2
+    environment:
+      POSTGRES_USER: rails
+      POSTGRES_PASSWORD: test_db_password
+    ports: 
+      - '5432:5432'
+    volumes:
+      - rails-postgres:/var/lib/postgresql/data
+
+  rails:
+    build:
+      context: .
+      dockerfile: Dockerfile.rails
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./test-rails:/opt/app
+    links:
+      - postgres
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+volumes:
+  rails-postgres:

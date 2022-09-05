@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  wordpress:
+    image: wordpress
+    ports: 
+      - 8080:80
+    environment:
+        WORDPRESS_DB_HOST: database
+        WORDPRESS_DB_USER: exampleuser
+        WORDPRESS_DB_PASSWORD: examplepass
+        WORDPRESS_DB_NAME: exampledb
+  database:
+    image: mariadb
+    environment:
+        MYSQL_DATABASE: exampledb
+        MYSQL_USER: exampleuser
+        MYSQL_PASSWORD: examplepass
+        MYSQL_ROOT_PASSWORD: example
